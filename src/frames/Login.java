@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  *
- * @author diego
+ * @author diego, eduardo
  */
 public class Login extends javax.swing.JFrame {
 
@@ -34,19 +34,24 @@ public class Login extends javax.swing.JFrame {
         jLabel_wallpaper.setIcon(icono_fondo);
         this.repaint();
 
-        //CAMBIAR LOGO
+        //CAMBIAR LOGO LOGIN
         ImageIcon logo = new ImageIcon("src/images/logo.png");
         Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
         jLabel_logo.setIcon(icono_logo);
 
-        //CAMBIAR OJO
+        //CAMBIAR OJO PASS
         ImageIcon ver = new ImageIcon("src/images/eye.png");
         Icon icono_ver = new ImageIcon(ver.getImage().getScaledInstance(jLabel_verPass.getWidth(), jLabel_verPass.getHeight(), Image.SCALE_DEFAULT));
         jLabel_verPass.setIcon(icono_ver);
 
-        //CAMBIAR ICONO
+        //CAMBIAR ICONO VENTANA
         ImageIcon img = new ImageIcon("src/images/logo.png"); //icono.png
         setIconImage(img.getImage());
+        
+        /*PVTO GIT VA A HACER QUE EXPLOTE ESTA MAMADA, SUBI COMO 300 COMMITS PORQUE NO ME DEJO
+        Y AL FINAL TERMINARON SUBIENDOSE, AL CHILE NO ENTIENDO QUE PEDO QUE PEDAL, QUERIA JUNTAR
+        CLASES EL JFRAME VIEJO CON EL NUEVOO Y AGREGAR UN PVTO BOTON PASADO, QUE NO MAME.
+        SI NO DESCUBRO COMO FUNCIONA VAMOS A VALER NEPECIANO*/
 
     }
 

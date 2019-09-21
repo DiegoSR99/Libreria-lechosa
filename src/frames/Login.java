@@ -6,27 +6,49 @@
 package frames;
 
 import java.awt.Image;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.sql.*;
+import javax.swing.*;
 
 /**
  *
- * @author diego
+ * @author diego, eduardo
  */
 public class Login extends javax.swing.JFrame {
+
+    String usuario = "";
+    String contrasena = "";
 
     /**
      * Creates new form Login
      */
     public Login() {
+
         initComponents();
         setResizable(false);
+        setSize(400, 550);
         setLocationRelativeTo(null);
         setTitle("Acceso Biblioteca");
-        ImageIcon alo = new ImageIcon("src/images/Fondo1.jpg");
-        Icon icono = new ImageIcon(alo.getImage().getScaledInstance(wallpaper.getWidth(), wallpaper.getHeight(), Image.SCALE_DEFAULT));
-        wallpaper.setIcon(icono);
+
+        //CAMBIAR FONDO
+        ImageIcon fondo = new ImageIcon("src/images/fondo.jpg");
+        Icon icono_fondo = new ImageIcon(fondo.getImage().getScaledInstance(jLabel_wallpaper.getWidth(), jLabel_wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_wallpaper.setIcon(icono_fondo);
         this.repaint();
+
+        //CAMBIAR LOGO LOGIN
+        ImageIcon logo = new ImageIcon("src/images/logo.png");
+        Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_logo.setIcon(icono_logo);
+
+        //CAMBIAR OJO CONTRASEÑA
+        ImageIcon ver = new ImageIcon("src/images/eye.png");
+        Icon icono_ver = new ImageIcon(ver.getImage().getScaledInstance(jLabel_verPass.getWidth(), jLabel_verPass.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_verPass.setIcon(icono_ver);
+
+        //CAMBIAR ICONO VENTANA
+        ImageIcon img = new ImageIcon("src/images/logo.png"); //icono.png
+        setIconImage(img.getImage());
+
     }
 
     /**
@@ -38,23 +60,81 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        wallpaper = new javax.swing.JLabel();
+        jLabel_verPass = new javax.swing.JLabel();
+        tf_usuario = new javax.swing.JTextField();
+        tf_contrasena = new javax.swing.JPasswordField();
+        jButton_Acceder = new javax.swing.JButton();
+        jLabel_logo = new javax.swing.JLabel();
+        jLabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(wallpaper, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-        );
+        jLabel_verPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_verPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_verPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_verPassMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_verPassMouseExited(evt);
+            }
+        });
+        getContentPane().add(jLabel_verPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 30, 30));
+
+        tf_usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tf_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        getContentPane().add(tf_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 180, -1));
+
+        tf_contrasena.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tf_contrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        getContentPane().add(tf_contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 180, -1));
+
+        jButton_Acceder.setBackground(new java.awt.Color(255, 255, 255));
+        jButton_Acceder.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton_Acceder.setText("ACCEDER");
+        jButton_Acceder.setBorder(null);
+        jButton_Acceder.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton_Acceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AccederActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_Acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 180, 30));
+        getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 200, 200));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
+
+        usuario = tf_usuario.getText().trim();
+        contrasena = tf_contrasena.getText().trim();
+
+        if (!usuario.equals("") || !contrasena.equals("")) {
+            try {
+
+            } catch (Exception e) { //SQLException
+                System.err.println("Error en el botón acceder.");
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+        }
+
+    }//GEN-LAST:event_jButton_AccederActionPerformed
+
+    private void jLabel_verPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseEntered
+        tf_contrasena.setEchoChar((char) 0);
+    }//GEN-LAST:event_jLabel_verPassMouseEntered
+
+    private void jLabel_verPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseExited
+        tf_contrasena.setEchoChar('*');
+    }//GEN-LAST:event_jLabel_verPassMouseExited
 
     /**
      * @param args the command line arguments
@@ -92,6 +172,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel wallpaper;
+    private javax.swing.JButton jButton_Acceder;
+    private javax.swing.JLabel jLabel_logo;
+    private javax.swing.JLabel jLabel_verPass;
+    private javax.swing.JLabel jLabel_wallpaper;
+    private javax.swing.JPasswordField tf_contrasena;
+    private javax.swing.JTextField tf_usuario;
     // End of variables declaration//GEN-END:variables
 }

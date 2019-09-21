@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  *
- * @author diego, eduardo
+ * @author diego
  */
 public class Login extends javax.swing.JFrame {
 
@@ -34,17 +34,17 @@ public class Login extends javax.swing.JFrame {
         jLabel_wallpaper.setIcon(icono_fondo);
         this.repaint();
 
-        //CAMBIAR LOGO LOGIN
+        //CAMBIAR LOGO
         ImageIcon logo = new ImageIcon("src/images/logo.png");
         Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
         jLabel_logo.setIcon(icono_logo);
 
-        //CAMBIAR OJO CONTRASEÑA
+        //CAMBIAR OJO
         ImageIcon ver = new ImageIcon("src/images/eye.png");
         Icon icono_ver = new ImageIcon(ver.getImage().getScaledInstance(jLabel_verPass.getWidth(), jLabel_verPass.getHeight(), Image.SCALE_DEFAULT));
         jLabel_verPass.setIcon(icono_ver);
 
-        //CAMBIAR ICONO VENTANA
+        //CAMBIAR ICONO
         ImageIcon img = new ImageIcon("src/images/logo.png"); //icono.png
         setIconImage(img.getImage());
 

@@ -6,7 +6,6 @@
 package frames;
 
 import java.awt.Image;
-import java.sql.*;
 import javax.swing.*;
 
 /**

@@ -16,7 +16,7 @@ import clases.Conexion;
  */
 public class Login extends javax.swing.JFrame {
 
-    String usuario = "";
+    public static String usuario = "";
     String contrasena = "";
 
     /**
@@ -117,14 +117,16 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
-
+//Creacion de los logins
         usuario = tf_usuario.getText().trim();
         contrasena = tf_contrasena.getText().trim();
 
         if (!usuario.equals("") || !contrasena.equals("")) {
             try {
-            Connection cn  = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement("select permiso, estatus from usuarios where username='"+usuario+"' and contrasena='"+contrasena+"'");        
+            Connection cn  = Conexion.conectar();                        
+                PreparedStatement pst = cn.prepareStatement(
+                        "select permiso, estatus from usuarios where username = '" + usuario
+                        + "' and contrasena = '" + contrasena + "'");
                 ResultSet rs = pst.executeQuery();
                 if(rs.next()){
                  int permiso= rs.getInt("permiso");   
@@ -146,7 +148,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
         }
-               
+   //Terminan los logins y confirmacion de credenciales.          
     }//GEN-LAST:event_jButton_AccederActionPerformed
 
     private void jLabel_verPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseEntered

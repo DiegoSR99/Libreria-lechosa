@@ -14,13 +14,13 @@ import javax.swing.JOptionPane;
  */
 public class Conexion {
 
-    public static Connection conectar() {
+    public static Connection conectar(){
         try {
-            Connection conectar = DriverManager.getConnection("jdbc:postgresql://ec2-3-83-116-102.compute-1.amazonaws.com/5432",
+            Connection cn = DriverManager.getConnection("jdbc:postgresql://ec2-3-83-116-102.compute-1.amazonaws.com/5432",
                     "postgres", "c0ntr4s3n4");
-            return conectar;
+            return cn;
         } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null,"Error en la conexión, contacte al adminsitrador del programa");    
+            JOptionPane.showMessageDialog(null,"Error en la conexión, contacte al adminsitrador del programa");
         }
         return (null);
     }

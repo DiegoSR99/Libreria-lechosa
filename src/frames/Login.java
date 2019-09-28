@@ -49,12 +49,6 @@ public class Login extends javax.swing.JFrame {
         //CAMBIAR ICONO VENTANA
         ImageIcon img = new ImageIcon("src/images/logo.png"); //icono.png
         setIconImage(img.getImage());
-        
-        /*PVTO GIT VA A HACER QUE EXPLOTE ESTA MAMADA, SUBI COMO 300 COMMITS PORQUE NO ME DEJO
-        Y AL FINAL TERMINARON SUBIENDOSE, AL CHILE NO ENTIENDO QUE PEDO QUE PEDAL, QUERIA JUNTAR
-        CLASES EL JFRAME VIEJO CON EL NUEVOO Y AGREGAR UN PVTO BOTON PASADO, QUE NO MAME.
-        SI NO DESCUBRO COMO FUNCIONA VAMOS A VALER NEPECIANO*/
-
     }
 
     /**
@@ -123,30 +117,30 @@ public class Login extends javax.swing.JFrame {
 
         if (!usuario.equals("") || !contrasena.equals("")) {
             try {
-            Connection cn  = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement("select permiso, estatus from usuarios where username='"+usuario+"' and contrasena='"+contrasena+"'");        
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement("select permiso, estatus from usuarios where username='" + usuario + "' and contrasena='" + contrasena + "'");
                 ResultSet rs = pst.executeQuery();
-                if(rs.next()){
-                 int permiso= rs.getInt("permiso");   
-                 boolean estatus= rs.getBoolean("estatus");
-                 if(permiso == 3 && estatus){
-                 dispose();    
-                 }else if(permiso == 2 && estatus){
-                     
-                 }else if(permiso == 1 && estatus){
-                     
-                 }
-                }else{
-                JOptionPane.showMessageDialog(null,"Credenciales erronaes, trata de nuevo imbecil");
+                if (rs.next()) {
+                    int permiso = rs.getInt("permiso");
+                    boolean estatus = rs.getBoolean("estatus");
+                    if (permiso == 3 && estatus) {
+                        dispose();
+                    } else if (permiso == 2 && estatus) {
+
+                    } else if (permiso == 1 && estatus) {
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Credenciales erronaes, trata de nuevo imbecil.");
                 }
             } catch (SQLException e) { //SQLException
-                System.err.println("Error en el botón acceder.");
-                JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador");
+                System.err.println("Error " + e);
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
         }
-               
+
     }//GEN-LAST:event_jButton_AccederActionPerformed
 
     private void jLabel_verPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseEntered

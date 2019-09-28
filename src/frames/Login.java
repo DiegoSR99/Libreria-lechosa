@@ -7,6 +7,8 @@ package frames;
 
 import java.awt.Image;
 import javax.swing.*;
+import java.sql.*;
+import clases.Conexion;
 
 /**
  *
@@ -121,15 +123,30 @@ public class Login extends javax.swing.JFrame {
 
         if (!usuario.equals("") || !contrasena.equals("")) {
             try {
-
-            } catch (Exception e) { //SQLException
+            Connection cn  = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement("select permiso, estatus from usuarios where username='"+usuario+"' and contrasena='"+contrasena+"'");        
+                ResultSet rs = pst.executeQuery();
+                if(rs.next()){
+                 int permiso= rs.getInt("permiso");   
+                 boolean estatus= rs.getBoolean("estatus");
+                 if(permiso == 3 && estatus){
+                 dispose();    
+                 }else if(permiso == 2 && estatus){
+                     
+                 }else if(permiso == 1 && estatus){
+                     
+                 }
+                }else{
+                JOptionPane.showMessageDialog(null,"Credenciales erronaes, trata de nuevo imbecil");
+                }
+            } catch (SQLException e) { //SQLException
                 System.err.println("Error en el botón acceder.");
                 JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
         }
-
+               
     }//GEN-LAST:event_jButton_AccederActionPerformed
 
     private void jLabel_verPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseEntered

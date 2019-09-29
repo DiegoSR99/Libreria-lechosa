@@ -74,6 +74,13 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel_loading, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 420, 85, 85));
 
@@ -213,6 +220,11 @@ public class Login extends javax.swing.JFrame {
             tf_contrasena.setForeground(Color.LIGHT_GRAY);
         }
     }//GEN-LAST:event_tf_contrasenaFocusLost
+
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+        // TODO add your handling code here:
+        jLabel_logo.requestFocus();
+    }//GEN-LAST:event_formWindowLostFocus
 
     /**
      * @param args the command line arguments

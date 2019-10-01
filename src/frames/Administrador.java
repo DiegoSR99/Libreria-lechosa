@@ -6,7 +6,12 @@
 package frames;
 
 import clases.Conexion;
+import java.awt.Color;
+import java.awt.Image;
 import java.sql.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -27,10 +32,26 @@ public class Administrador extends javax.swing.JFrame {
 
         //OPCIONES JFRAME        
         setResizable(false);
-        setSize(750, 500);
+        setSize(1280, 720);
         setLocationRelativeTo(null);
-        setTitle("Panel de Administración - Logeado como " + usuario);
+        setTitle("Administración - Sesión de " + usuario);       
+        
 
+jPanel1.setBackground(new Color(255, 255, 255, 0));
+jPanel2.setBackground(new Color(255, 255, 255, 0));
+jPanel3.setBackground(new Color(255, 255, 255, 0));
+
+        
+        
+        jTabbedPane1.setOpaque(false);
+        ImageIcon fondo = new ImageIcon("src/images/fondo.jpg");
+        Icon icono_fondo = new ImageIcon(fondo.getImage().getScaledInstance(jLabel_wallpaper.getWidth(), jLabel_wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_wallpaper.setIcon(icono_fondo);
+        this.repaint();
+
+        ImageIcon logo = new ImageIcon("src/images/logo.png");
+        Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_logo.setIcon(icono_logo);
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement("SELECT nombre FROM usuarios WHERE username = '" + usuario + "'");
@@ -38,7 +59,7 @@ public class Administrador extends javax.swing.JFrame {
             if (rs.next()) {
                 nombreUsuario = rs.getString("nombre");
                 jLabel_NombreUsuario.setText("Bienvenido, " + nombreUsuario);
-                
+
             }
         } catch (SQLException e) {
         }
@@ -53,16 +74,36 @@ public class Administrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel_logo = new javax.swing.JLabel();
+        jLabel_TextoLibreria_lechosa = new javax.swing.JLabel();
+        jButton_AgregarLibro = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel_NombreUsuario = new javax.swing.JLabel();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
+
+        jLabel_TextoLibreria_lechosa.setText("Libreria lechosa S.A de C.V ©.®.");
+        getContentPane().add(jLabel_TextoLibreria_lechosa, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+
+        jButton_AgregarLibro.setText("Agregar libro");
+        getContentPane().add(jButton_AgregarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        jTabbedPane1.addTab("Libros", jPanel1);
+        jTabbedPane1.addTab("Usuarios", jPanel2);
+        jTabbedPane1.addTab("penes", jPanel3);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1280, 560));
 
         jLabel_NombreUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel_NombreUsuario.setText("jLabel1");
-        getContentPane().add(jLabel_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, -1));
-        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 450));
+        getContentPane().add(jLabel_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 750, -1));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -103,7 +144,14 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_AgregarLibro;
     private javax.swing.JLabel jLabel_NombreUsuario;
+    private javax.swing.JLabel jLabel_TextoLibreria_lechosa;
+    private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_wallpaper;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

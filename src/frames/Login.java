@@ -153,12 +153,14 @@ public class Login extends javax.swing.JFrame {
                     if (estatus && permiso == 3) {
                         dispose();
                         new Administrador().setVisible(true);
+                        new Bibliotecario().setVisible(true);
+                        new Usuario().setVisible(true); 
                     } else if (estatus && permiso == 2) {
                         dispose();
-                        //new Bibliotecario().setVisible(true); ??
+                        new Bibliotecario().setVisible(true); 
                     } else if (estatus && permiso == 1) {
                         dispose();
-                        //new Usuario().setVisible(true); ??
+                        new Usuario().setVisible(true); 
                     }
                     if (!estatus) {
                         JOptionPane.showMessageDialog(rootPane, "USUARIO INACTIVO", "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);

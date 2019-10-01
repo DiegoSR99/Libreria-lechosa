@@ -6,7 +6,11 @@
 package frames;
 
 import clases.Conexion;
+import java.awt.Color;
+import java.awt.Image;
 import java.sql.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,10 +31,37 @@ public class Administrador extends javax.swing.JFrame {
 
         //OPCIONES JFRAME        
         setResizable(false);
-        setSize(750, 500);
+        setSize(1280, 720);
         setLocationRelativeTo(null);
-        setTitle("Panel de Administración - Logeado como " + usuario);
+        setTitle("Administración - Sesión de " + usuario);
 
+        //JPANELS TRANSPARENTES
+        jPanel_Libros.setBackground(new Color(255, 255, 255, 0));
+        jPanel_Usuarios.setBackground(new Color(255, 255, 255, 0));
+        jPanel3.setBackground(new Color(255, 255, 255, 0));
+        jTabbedPane1.setOpaque(false);
+
+        //FONDO IMAGENES
+        ImageIcon fondo = new ImageIcon("src/images/fondo.jpg");
+        Icon icono_fondo = new ImageIcon(fondo.getImage().getScaledInstance(jLabel_wallpaper.getWidth(), jLabel_wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_wallpaper.setIcon(icono_fondo);
+        this.repaint();
+
+        //IMAGEN LOGO
+        ImageIcon logo = new ImageIcon("src/images/logo.png");
+        Icon icono_logo = new ImageIcon(logo.getImage().getScaledInstance(jLabel_logo.getWidth(), jLabel_logo.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_logo.setIcon(icono_logo);
+
+        ImageIcon addLibro = new ImageIcon("src/images/addbook.png");
+        Icon icono_addLibro = new ImageIcon(addLibro.getImage().getScaledInstance(jButton_AgregarLibro.getWidth() - 50, jButton_AgregarLibro.getHeight() - 50, Image.SCALE_DEFAULT));
+        jButton_AgregarLibro.setIcon(icono_addLibro);
+        ImageIcon delLibro = new ImageIcon("src/images/delbook.png");
+        Icon icono_delLibro = new ImageIcon(delLibro.getImage().getScaledInstance(jButton_EliminarLibro.getWidth() - 50, jButton_EliminarLibro.getHeight() - 50, Image.SCALE_DEFAULT));
+        jButton_EliminarLibro.setIcon(icono_delLibro);
+        jButton_AgregarLibro.setOpaque(false);
+        jButton_EliminarLibro.setOpaque(false);
+
+        //CONEXION JDBC
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement("SELECT nombre FROM usuarios WHERE username = '" + usuario + "'");
@@ -38,9 +69,10 @@ public class Administrador extends javax.swing.JFrame {
             if (rs.next()) {
                 nombreUsuario = rs.getString("nombre");
                 jLabel_NombreUsuario.setText("Bienvenido, " + nombreUsuario);
-                
+
             }
         } catch (SQLException e) {
+            System.err.println("Error" + e);
         }
     }
 
@@ -53,16 +85,95 @@ public class Administrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel_logo = new javax.swing.JLabel();
+        jLabel_TextoLibreria_lechosa = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel_Libros = new javax.swing.JPanel();
+        jLabel_NombreLibro = new javax.swing.JLabel();
+        jLabel_AutorLibro = new javax.swing.JLabel();
+        jLabel_AñoLibro = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jButton_AgregarLibro = new javax.swing.JButton();
+        jButton_EliminarLibro = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel_Usuarios = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel_NombreUsuario = new javax.swing.JLabel();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 80));
+
+        jLabel_TextoLibreria_lechosa.setText("Libreria Lechosa S.A de C.V ©.®.");
+        getContentPane().add(jLabel_TextoLibreria_lechosa, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
+
+        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jPanel_Libros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel_NombreLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_NombreLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_NombreLibro.setText("Nombre");
+        jPanel_Libros.add(jLabel_NombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, 20));
+
+        jLabel_AutorLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AutorLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AutorLibro.setText("Autor");
+        jPanel_Libros.add(jLabel_AutorLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 60, -1));
+
+        jLabel_AñoLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AñoLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AñoLibro.setText("Año");
+        jPanel_Libros.add(jLabel_AñoLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 60, -1));
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 540, -1));
+
+        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 540, -1));
+
+        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 540, -1));
+
+        jButton_AgregarLibro.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jButton_AgregarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, 150, 150));
+
+        jButton_EliminarLibro.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jButton_EliminarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 150, 150));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel_Libros.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 10, 600));
+        jPanel_Libros.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1280, 10));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("MODIFICAR REGISTRO");
+        jPanel_Libros.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 0, 270, 40));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("AÑADIR LIBRO");
+        jPanel_Libros.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 230, 40));
+
+        jTabbedPane1.addTab("Libros", jPanel_Libros);
+        jTabbedPane1.addTab("Usuarios", jPanel_Usuarios);
+        jTabbedPane1.addTab("Biblioteca", jPanel3);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 1280, 630));
 
         jLabel_NombreUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel_NombreUsuario.setText("jLabel1");
-        getContentPane().add(jLabel_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, -1));
-        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 450));
+        jLabel_NombreUsuario.setText("Bienvenido, (NOMBREUSUARIO)");
+        getContentPane().add(jLabel_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 750, -1));
+        getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -103,7 +214,25 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_AgregarLibro;
+    private javax.swing.JButton jButton_EliminarLibro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel_AutorLibro;
+    private javax.swing.JLabel jLabel_AñoLibro;
+    private javax.swing.JLabel jLabel_NombreLibro;
     private javax.swing.JLabel jLabel_NombreUsuario;
+    private javax.swing.JLabel jLabel_TextoLibreria_lechosa;
+    private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_wallpaper;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel_Libros;
+    private javax.swing.JPanel jPanel_Usuarios;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

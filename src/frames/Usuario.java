@@ -38,7 +38,9 @@ public class Usuario extends javax.swing.JFrame {
                 jLabel_NombreUsuario.setText("Bienvenido, " + nombreUsuario);
 
             }
+            cn.close();
         } catch (SQLException e) {
+            System.err.println("Error" + e);
         }
     }
 

@@ -16,7 +16,7 @@ import clases.Conexion;
  */
 public class Login extends javax.swing.JFrame {
 
-    public static String usuario = "";
+    public static String usuario = null;
     String contrasena = "";
 
     /**
@@ -66,8 +66,8 @@ public class Login extends javax.swing.JFrame {
 
         jLabel_TextoLibreria_lechosa = new javax.swing.JLabel();
         jLabel_verPass = new javax.swing.JLabel();
-        tf_usuario = new javax.swing.JTextField();
-        tf_contrasena = new javax.swing.JPasswordField();
+        jTextField_usuario = new javax.swing.JTextField();
+        jTextField_contrasena = new javax.swing.JPasswordField();
         jButton_Acceder = new javax.swing.JButton();
         jLabel_logo = new javax.swing.JLabel();
         jLabel_bievenida = new javax.swing.JLabel();
@@ -93,35 +93,35 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel_verPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 30, 30));
 
-        tf_usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_usuario.setForeground(java.awt.Color.lightGray);
-        tf_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_usuario.setText("USUARIO");
-        tf_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        tf_usuario.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_usuario.setForeground(java.awt.Color.lightGray);
+        jTextField_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_usuario.setText("USUARIO");
+        jTextField_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jTextField_usuario.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                tf_usuarioFocusGained(evt);
+                jTextField_usuarioFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_usuarioFocusLost(evt);
+                jTextField_usuarioFocusLost(evt);
             }
         });
-        getContentPane().add(tf_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 180, -1));
+        getContentPane().add(jTextField_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 180, -1));
 
-        tf_contrasena.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tf_contrasena.setForeground(java.awt.Color.lightGray);
-        tf_contrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_contrasena.setText("CONTRASEÑA");
-        tf_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        tf_contrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_contrasena.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_contrasena.setForeground(java.awt.Color.lightGray);
+        jTextField_contrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_contrasena.setText("CONTRASEÑA");
+        jTextField_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jTextField_contrasena.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                tf_contrasenaFocusGained(evt);
+                jTextField_contrasenaFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_contrasenaFocusLost(evt);
+                jTextField_contrasenaFocusLost(evt);
             }
         });
-        getContentPane().add(tf_contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 180, -1));
+        getContentPane().add(jTextField_contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 180, -1));
 
         jButton_Acceder.setBackground(new java.awt.Color(255, 255, 255));
         jButton_Acceder.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -147,8 +147,8 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
 
-        usuario = tf_usuario.getText().trim();
-        contrasena = tf_contrasena.getText().trim();
+        usuario = jTextField_usuario.getText().trim();
+        contrasena = jTextField_contrasena.getText().trim();
 
         if (!usuario.equals("") && !usuario.equals("USUARIO") || !contrasena.equals("") && !contrasena.equals("CONTRASEÑA")) {
             try {
@@ -164,19 +164,20 @@ public class Login extends javax.swing.JFrame {
                         new Administrador().setVisible(true);
                     } else if (estatus && permiso == 2) {
                         dispose();
-                        new Bibliotecario().setVisible(true); 
+                        new Bibliotecario().setVisible(true);
                     } else if (estatus && permiso == 1) {
                         dispose();
-                        new Usuario().setVisible(true); 
+                        new Usuario().setVisible(true);
                     }
                     if (!estatus) {
                         JOptionPane.showMessageDialog(rootPane, "USUARIO INACTIVO", "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Credenciales errónaes, intenta de nuevo.");
-                    tf_usuario.setText("");
-                    tf_contrasena.setText("");
+                    jTextField_usuario.setText("");
+                    jTextField_contrasena.setText("");
                 }
+                cn.close();
             } catch (SQLException e) { //SQLExceptiondiwgo
                 System.err.println("Error " + e);
                 JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador.");
@@ -188,40 +189,40 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_AccederActionPerformed
 
     private void jLabel_verPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseEntered
-        tf_contrasena.setEchoChar((char) 0);
+        jTextField_contrasena.setEchoChar((char) 0);
     }//GEN-LAST:event_jLabel_verPassMouseEntered
 
     private void jLabel_verPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_verPassMouseExited
-        tf_contrasena.setEchoChar('*');
+        jTextField_contrasena.setEchoChar('*');
     }//GEN-LAST:event_jLabel_verPassMouseExited
 
-    private void tf_usuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_usuarioFocusGained
-        if (tf_usuario.getText().equals("USUARIO")) {
-            tf_usuario.setText("");
-            tf_usuario.setForeground(Color.BLACK);
+    private void jTextField_usuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_usuarioFocusGained
+        if (jTextField_usuario.getText().equals("USUARIO")) {
+            jTextField_usuario.setText("");
+            jTextField_usuario.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_tf_usuarioFocusGained
+    }//GEN-LAST:event_jTextField_usuarioFocusGained
 
-    private void tf_usuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_usuarioFocusLost
-        if (tf_usuario.getText().equals("")) {
-            tf_usuario.setText("USUARIO");
-            tf_usuario.setForeground(Color.LIGHT_GRAY);
+    private void jTextField_usuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_usuarioFocusLost
+        if (jTextField_usuario.getText().equals("")) {
+            jTextField_usuario.setText("USUARIO");
+            jTextField_usuario.setForeground(Color.LIGHT_GRAY);
         }
-    }//GEN-LAST:event_tf_usuarioFocusLost
+    }//GEN-LAST:event_jTextField_usuarioFocusLost
 
-    private void tf_contrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_contrasenaFocusGained
-        if (tf_contrasena.getText().equals("CONTRASEÑA")) {
-            tf_contrasena.setText("");
-            tf_contrasena.setForeground(Color.BLACK);
+    private void jTextField_contrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_contrasenaFocusGained
+        if (jTextField_contrasena.getText().equals("CONTRASEÑA")) {
+            jTextField_contrasena.setText("");
+            jTextField_contrasena.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_tf_contrasenaFocusGained
+    }//GEN-LAST:event_jTextField_contrasenaFocusGained
 
-    private void tf_contrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_contrasenaFocusLost
-        if (tf_contrasena.getText().equals("")) {
-            tf_contrasena.setText("CONTRASEÑA");
-            tf_contrasena.setForeground(Color.LIGHT_GRAY);
+    private void jTextField_contrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_contrasenaFocusLost
+        if (jTextField_contrasena.getText().equals("")) {
+            jTextField_contrasena.setText("CONTRASEÑA");
+            jTextField_contrasena.setForeground(Color.LIGHT_GRAY);
         }
-    }//GEN-LAST:event_tf_contrasenaFocusLost
+    }//GEN-LAST:event_jTextField_contrasenaFocusLost
 
     /**
      * @param args the command line arguments
@@ -265,7 +266,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_verPass;
     private javax.swing.JLabel jLabel_wallpaper;
-    private javax.swing.JPasswordField tf_contrasena;
-    private javax.swing.JTextField tf_usuario;
+    private javax.swing.JPasswordField jTextField_contrasena;
+    private javax.swing.JTextField jTextField_usuario;
     // End of variables declaration//GEN-END:variables
 }

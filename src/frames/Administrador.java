@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package frames;
 
 import clases.Conexion;
 import java.awt.*;
 import java.sql.*;
+import java.util.Calendar;
 import javax.swing.*;
+import javax.swing.table.*;
 
-/**
- *
- * @author EDUARDO
- */
 public class Administrador extends javax.swing.JFrame {
 
-    String usuario, nombreUsuario;
+    String usuario, nombreUsuario, bookUpdate;
+    String empty = "";
     public static int sesionUsuario;
+    DefaultTableModel modelo;
 
     /**
      * Creates new form Administrador
@@ -36,7 +31,7 @@ public class Administrador extends javax.swing.JFrame {
         //JPANELS TRANSPARENTES
         jPanel_Libros.setBackground(new Color(255, 255, 255, 0));
         jPanel_Usuarios.setBackground(new Color(255, 255, 255, 0));
-        jPanel3.setBackground(new Color(255, 255, 255, 0));
+        jPanel_Biblioteca.setBackground(new Color(255, 255, 255, 0));
         jTabbedPane1.setOpaque(false);
 
         //FONDO IMAGENES
@@ -45,14 +40,17 @@ public class Administrador extends javax.swing.JFrame {
         jLabel_wallpaper.setIcon(icono_fondo);
         this.repaint();
 
+        //ICONO LIBRO BOTON +
         ImageIcon addLibro = new ImageIcon("src/images/addbook.png");
-        Icon icono_addLibro = new ImageIcon(addLibro.getImage().getScaledInstance(jButton_AgregarLibro.getWidth() - 50, jButton_AgregarLibro.getHeight() - 50, Image.SCALE_DEFAULT));
-        jButton_AgregarLibro.setIcon(icono_addLibro);
+        Icon icono_addLibro = new ImageIcon(addLibro.getImage().getScaledInstance(jButton_Agregar.getWidth() - 50, jButton_Agregar.getHeight() - 50, Image.SCALE_DEFAULT));
+        jButton_Agregar.setIcon(icono_addLibro);
+
+        //ICONO LIBRO BOTON -
         ImageIcon delLibro = new ImageIcon("src/images/delbook.png");
-        Icon icono_delLibro = new ImageIcon(delLibro.getImage().getScaledInstance(jButton_EliminarLibro.getWidth() - 50, jButton_EliminarLibro.getHeight() - 50, Image.SCALE_DEFAULT));
-        jButton_EliminarLibro.setIcon(icono_delLibro);
-        jButton_AgregarLibro.setOpaque(false);
-        jButton_EliminarLibro.setOpaque(false);
+        Icon icono_delLibro = new ImageIcon(delLibro.getImage().getScaledInstance(jButton_Eliminar.getWidth() - 50, jButton_Eliminar.getHeight() - 50, Image.SCALE_DEFAULT));
+        jButton_Eliminar.setIcon(icono_delLibro);
+        jButton_Agregar.setOpaque(false);
+        jButton_Eliminar.setOpaque(false);
 
         //CONEXION JDBC
         try {
@@ -61,12 +59,20 @@ public class Administrador extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 nombreUsuario = rs.getString("nombre");
-                jMenu4.setText(nombreUsuario);
-
+                jMenu_Nombre.setText(nombreUsuario);
             }
+            cn.close();
         } catch (SQLException e) {
             System.err.println("Error" + e);
         }
+
+        //COMBOBOX HASTA AÑO PRESENTE
+        for (int i = 1900; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
+            jComboBox_AñoAgregar.addItem(i + "");
+            jComboBox_AñoModificar.addItem(i + "");
+        }
+        tableModelDef();
+        jTable1.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -80,98 +86,246 @@ public class Administrador extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel_Libros = new javax.swing.JPanel();
-        jLabel_NombreLibro = new javax.swing.JLabel();
-        jLabel_AutorLibro = new javax.swing.JLabel();
-        jLabel_EditorialLibro = new javax.swing.JLabel();
-        jLabel_AñoLibro = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton_AgregarLibro = new javax.swing.JButton();
-        jButton_EliminarLibro = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_TituloAgregar = new javax.swing.JLabel();
+        jLabel_AutorAgregar = new javax.swing.JLabel();
+        jLabel_EditorialAgregar = new javax.swing.JLabel();
+        jLabel_AñoAgregar = new javax.swing.JLabel();
+        jLabel_CodigoAgregar = new javax.swing.JLabel();
+        jTextField_TituloAgregar = new javax.swing.JTextField();
+        jTextField_AutorAgregar = new javax.swing.JTextField();
+        jTextField_EditorialAgregar = new javax.swing.JTextField();
+        jComboBox_AñoAgregar = new javax.swing.JComboBox<>();
+        jTextField_CodigoAgregar = new javax.swing.JTextField();
+        jButton_Agregar = new javax.swing.JButton();
+        jButton_Eliminar = new javax.swing.JButton();
+        jLabel_AgregarBox = new javax.swing.JLabel();
+        jLabel_TituloModificar = new javax.swing.JLabel();
+        jLabel_AutorModificar = new javax.swing.JLabel();
+        jLabel_EditorialModificar = new javax.swing.JLabel();
+        jLabel_AñoModificar = new javax.swing.JLabel();
+        jLabel_CodigoModificar = new javax.swing.JLabel();
+        jTextField_TituloModificar = new javax.swing.JTextField();
+        jTextField_AutorModificar = new javax.swing.JTextField();
+        jTextField_EditorialModificar = new javax.swing.JTextField();
+        jComboBox_AñoModificar = new javax.swing.JComboBox<>();
+        jTextField_CodigoModificar = new javax.swing.JTextField();
+        jButton_Modificar = new javax.swing.JButton();
+        jLabel_ModificarBox = new javax.swing.JLabel();
+        jLabel_TituloBusqueda = new javax.swing.JLabel();
+        jLabel_AutorBusqueda = new javax.swing.JLabel();
+        jTextField_TituloBusqueda = new javax.swing.JTextField();
+        jTextField_AutorBusqueda = new javax.swing.JTextField();
+        jButton_BuscarBusqueda = new javax.swing.JButton();
+        jButton_TodoBusqueda = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel_BusquedaBox = new javax.swing.JLabel();
+        jPanel_Biblioteca = new javax.swing.JPanel();
         jPanel_Usuarios = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jLabel_wallpaper = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu_Espaciador = new javax.swing.JMenu();
+        jMenu_Nombre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel_Libros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel_NombreLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_NombreLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel_NombreLibro.setText("Título:");
-        jPanel_Libros.add(jLabel_NombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 70, 20));
+        jLabel_TituloAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_TituloAgregar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_TituloAgregar.setText("Título:");
+        jPanel_Libros.add(jLabel_TituloAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 70, -1));
 
-        jLabel_AutorLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_AutorLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel_AutorLibro.setText("Autor:");
-        jPanel_Libros.add(jLabel_AutorLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 70, -1));
+        jLabel_AutorAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AutorAgregar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AutorAgregar.setText("Autor:");
+        jPanel_Libros.add(jLabel_AutorAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 70, -1));
 
-        jLabel_EditorialLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_EditorialLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel_EditorialLibro.setText("Editorial:");
-        jPanel_Libros.add(jLabel_EditorialLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 70, -1));
+        jLabel_EditorialAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_EditorialAgregar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_EditorialAgregar.setText("Editorial:");
+        jPanel_Libros.add(jLabel_EditorialAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 70, -1));
 
-        jLabel_AñoLibro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_AñoLibro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel_AñoLibro.setText("Año:");
-        jPanel_Libros.add(jLabel_AñoLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 70, -1));
+        jLabel_AñoAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AñoAgregar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AñoAgregar.setText("Año:");
+        jPanel_Libros.add(jLabel_AñoAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 70, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel_Libros.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 510, -1));
+        jLabel_CodigoAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_CodigoAgregar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_CodigoAgregar.setText("Código:");
+        jPanel_Libros.add(jLabel_CodigoAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 70, -1));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel_Libros.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 510, -1));
+        jTextField_TituloAgregar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_TituloAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_TituloAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 510, -1));
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel_Libros.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 510, -1));
+        jTextField_AutorAgregar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_AutorAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_AutorAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 510, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
-        jComboBox1.setSelectedIndex(-1);
-        jComboBox1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel_Libros.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 510, -1));
+        jTextField_EditorialAgregar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_EditorialAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_EditorialAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 510, -1));
 
-        jButton_AgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox_AñoAgregar.setSelectedIndex(-1);
+        jComboBox_AñoAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jComboBox_AñoAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 510, -1));
+
+        jTextField_CodigoAgregar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_CodigoAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_CodigoAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 510, -1));
+
+        jButton_Agregar.setBorder(null);
+        jButton_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_AgregarLibroActionPerformed(evt);
+                jButton_AgregarActionPerformed(evt);
             }
         });
-        jPanel_Libros.add(jButton_AgregarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, 100, 100));
+        jPanel_Libros.add(jButton_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 80, 80));
 
-        jButton_EliminarLibro.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Eliminar.setBorder(null);
+        jButton_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_EliminarLibroActionPerformed(evt);
+                jButton_EliminarActionPerformed(evt);
             }
         });
-        jPanel_Libros.add(jButton_EliminarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 100, 100));
+        jPanel_Libros.add(jButton_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 80, 80));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Modificar Libro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-        jPanel_Libros.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 620, 580));
+        jLabel_AgregarBox.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel_AgregarBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_AgregarBox.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Agregar Libro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel_Libros.add(jLabel_AgregarBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 300));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Agregar Libro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-        jPanel_Libros.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 580));
+        jLabel_TituloModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_TituloModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_TituloModificar.setText("Título:");
+        jPanel_Libros.add(jLabel_TituloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 70, -1));
+
+        jLabel_AutorModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AutorModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AutorModificar.setText("Autor:");
+        jPanel_Libros.add(jLabel_AutorModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 80, 70, -1));
+
+        jLabel_EditorialModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_EditorialModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_EditorialModificar.setText("Editorial:");
+        jPanel_Libros.add(jLabel_EditorialModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 110, 70, -1));
+
+        jLabel_AñoModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AñoModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AñoModificar.setText("Año:");
+        jPanel_Libros.add(jLabel_AñoModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 140, 70, -1));
+
+        jLabel_CodigoModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_CodigoModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_CodigoModificar.setText("Código:");
+        jPanel_Libros.add(jLabel_CodigoModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 180, 70, -1));
+
+        jTextField_TituloModificar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_TituloModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_TituloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, 510, -1));
+
+        jTextField_AutorModificar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_AutorModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_AutorModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 80, 510, -1));
+
+        jTextField_EditorialModificar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_EditorialModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_EditorialModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 110, 510, -1));
+
+        jComboBox_AñoModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jComboBox_AñoModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 510, -1));
+
+        jTextField_CodigoModificar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_CodigoModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel_Libros.add(jTextField_CodigoModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 510, -1));
+
+        jButton_Modificar.setText("Modificar");
+        jButton_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ModificarActionPerformed(evt);
+            }
+        });
+        jPanel_Libros.add(jButton_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, -1, -1));
+
+        jLabel_ModificarBox.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel_ModificarBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_ModificarBox.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Modificar Libro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel_Libros.add(jLabel_ModificarBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 620, 300));
+
+        jLabel_TituloBusqueda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_TituloBusqueda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_TituloBusqueda.setText("Título:");
+        jPanel_Libros.add(jLabel_TituloBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 70, -1));
+
+        jLabel_AutorBusqueda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_AutorBusqueda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_AutorBusqueda.setText("Autor:");
+        jPanel_Libros.add(jLabel_AutorBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 70, -1));
+        jPanel_Libros.add(jTextField_TituloBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 400, -1));
+        jPanel_Libros.add(jTextField_AutorBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 400, -1));
+
+        jButton_BuscarBusqueda.setText("Buscar");
+        jButton_BuscarBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_BuscarBusquedaActionPerformed(evt);
+            }
+        });
+        jPanel_Libros.add(jButton_BuscarBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 350, 70, -1));
+
+        jButton_TodoBusqueda.setText("Mostrar Todo");
+        jButton_TodoBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TodoBusquedaActionPerformed(evt);
+            }
+        });
+        jPanel_Libros.add(jButton_TodoBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 350, 110, -1));
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel_Libros.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 1230, 220));
+
+        jLabel_BusquedaBox.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel_BusquedaBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_BusquedaBox.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel_Libros.add(jLabel_BusquedaBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 1250, 300));
 
         jTabbedPane1.addTab("Libros", jPanel_Libros);
 
+        jPanel_Biblioteca.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("Biblioteca", jPanel_Biblioteca);
+
         jPanel_Usuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jTabbedPane1.addTab("Usuarios", jPanel_Usuarios);
-        jTabbedPane1.addTab("Biblioteca", jPanel3);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 660));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 690));
@@ -182,27 +336,175 @@ public class Administrador extends javax.swing.JFrame {
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setEnabled(false);
-        jMenu3.setHideActionText(true);
-        jMenu3.setPreferredSize(new java.awt.Dimension(1000, 24));
-        jMenuBar1.add(jMenu3);
+        jMenu_Espaciador.setEnabled(false);
+        jMenu_Espaciador.setHideActionText(true);
+        jMenu_Espaciador.setPreferredSize(new java.awt.Dimension(1000, 24));
+        jMenuBar1.add(jMenu_Espaciador);
 
-        jMenu4.setText("jMenu4");
-        jMenu4.setPreferredSize(new java.awt.Dimension(180, 24));
-        jMenuBar1.add(jMenu4);
+        jMenu_Nombre.setText("Nombre");
+        jMenu_Nombre.setPreferredSize(new java.awt.Dimension(180, 24));
+        jMenuBar1.add(jMenu_Nombre);
 
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_AgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AgregarLibroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_AgregarLibroActionPerformed
+    private void jButton_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AgregarActionPerformed
+        if (!jTextField_TituloAgregar.getText().equals(empty) & !jTextField_AutorAgregar.getText().equals(empty) & !jTextField_EditorialAgregar.getText().equals(empty)
+                & !jTextField_CodigoAgregar.getText().equals(empty) & jComboBox_AñoAgregar.getSelectedIndex() != -1) {
+            try {
+                Connection cn = Conexion.conectar();
+                String sqlinsertar = "insert into libros values(?,?,?,?,?,?)"; //Titulo, autor, editorial, fecha, codigo, add.
+                PreparedStatement pst = cn.prepareStatement(sqlinsertar);
+                pst.setString(1, jTextField_TituloAgregar.getText());
+                pst.setString(2, jTextField_AutorAgregar.getText());
+                pst.setString(3, jTextField_EditorialAgregar.getText());
+                pst.setInt(4, Integer.parseInt((String) jComboBox_AñoAgregar.getSelectedItem()));
+                pst.setInt(5, Integer.parseInt((String) jTextField_CodigoAgregar.getText()));
+                pst.setString(6, usuario);
+                pst.execute();
+                cn.close();
+                JOptionPane.showMessageDialog(null, "Registro GUARDADO satisfactoriamente.");
+            } catch (SQLException e) {
+                System.out.println(e.getCause());
+                System.out.println(e);
+            }
+            //actualizarDatos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Datos vacios o incompletos.");
+        }
+    }//GEN-LAST:event_jButton_AgregarActionPerformed
 
-    private void jButton_EliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EliminarLibroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_EliminarLibroActionPerformed
+    private void jButton_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EliminarActionPerformed
+        if (!jTextField_TituloAgregar.getText().equals(empty)) {
+            try {
+                Connection cn = Conexion.conectar();
+                String sqlinsertar = "DELETE FROM libros WHERE titulo = ? AND codigo = ?";
+                PreparedStatement pst = cn.prepareStatement(sqlinsertar);
+                pst.setString(1, jTextField_TituloAgregar.getText());
+                pst.setInt(2, Integer.parseInt((String) jTextField_CodigoAgregar.getText()));
+                pst.execute();
+                cn.close();
+                JOptionPane.showMessageDialog(null, "Registro ELIMINADO satisfactoriamente.");
+            } catch (SQLException e) {
+                System.out.println(e.getCause());
+                System.out.println(e);
+            }
+            //actualizarDatos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Se necesita introducir el título y código del libro.");
+        }
+    }//GEN-LAST:event_jButton_EliminarActionPerformed
+
+    private void jButton_TodoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TodoBusquedaActionPerformed
+        //actualizarDatos();
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("SELECT (LPAD(CAST(codigo AS VARCHAR),5,'0')), titulo, autor, editorial, fecha_publicacion FROM libros");
+            ResultSet rs = pst.executeQuery();
+
+            tableModelDef();
+            while (rs.next()) {
+                Object[] fila = new Object[5];
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getCause());
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton_TodoBusquedaActionPerformed
+
+    private void jButton_BuscarBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BuscarBusquedaActionPerformed
+        try {
+            Connection cn = Conexion.conectar();
+            String query = "SELECT (LPAD(CAST(codigo AS VARCHAR),5,'0')), titulo, autor, editorial, fecha_publicacion FROM libros WHERE ";
+            if (!(jTextField_TituloBusqueda.getText().equals(empty)) & !(jTextField_AutorBusqueda.getText().equals(empty))) {
+                query += "titulo ~* '" + jTextField_TituloBusqueda.getText() + "' AND autor ~* '" + jTextField_AutorBusqueda.getText() + "'";
+            } else if (!(jTextField_AutorBusqueda.getText().equals(empty))) {
+                //TITULO VACIO
+                query += "autor ~* '" + jTextField_AutorBusqueda.getText() + "'";
+            } else if (!(jTextField_TituloBusqueda.getText().equals(empty))) {
+                //AUTOR VACIO
+                query += "titulo ~* '" + jTextField_TituloBusqueda.getText() + "'";
+            } else {
+                //AMBOS CAMPOS VACIOS
+                JOptionPane.showMessageDialog(null, "Campos vacios.");
+            }
+            PreparedStatement pst = cn.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            tableModelDef();
+            while (rs.next()) {
+                Object[] fila = new Object[5];
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
+            }
+            cn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getCause());
+            System.err.println(e);
+        }
+    }//GEN-LAST:event_jButton_BuscarBusquedaActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int fila_point = jTable1.rowAtPoint(evt.getPoint());
+        int columna_point = 1;
+
+        if (fila_point > -1) {
+            bookUpdate = (String) modelo.getValueAt(fila_point, columna_point);
+        }
+
+        if (jTable1.getRowCount() > 0) {
+            jTextField_TituloModificar.setText((String) modelo.getValueAt(fila_point, 1));
+            jTextField_AutorModificar.setText((String) modelo.getValueAt(fila_point, 2));
+            jTextField_EditorialModificar.setText((String) modelo.getValueAt(fila_point, 3));
+            jComboBox_AñoModificar.setSelectedIndex((int) modelo.getValueAt(fila_point, 4) - 1900);
+            jTextField_CodigoModificar.setText((String) modelo.getValueAt(fila_point, 0));
+        }
+
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ModificarActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea realizar los cambios?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        switch (respuesta) {
+            case JOptionPane.NO_OPTION:
+                JOptionPane.showMessageDialog(null, "No se hicieron cambios.");
+                break;
+            case JOptionPane.YES_OPTION:
+                if (!jTextField_TituloModificar.getText().equals(empty) & !jTextField_AutorModificar.getText().equals(empty) & !jTextField_EditorialModificar.getText().equals(empty) & !jTextField_CodigoModificar.getText().equals(empty) & jComboBox_AñoModificar.getSelectedIndex() != -1) {
+                    try {
+                        Connection cn = Conexion.conectar();
+                        PreparedStatement pst = cn.prepareStatement("UPDATE libros SET titulo=?, autor=?, editorial=?, fecha_publicacion=?, codigo=? WHERE titulo = '" + bookUpdate + "'");
+                        pst.setString(1, jTextField_TituloModificar.getText());
+                        pst.setString(2, jTextField_AutorModificar.getText());
+                        pst.setString(3, jTextField_EditorialModificar.getText());
+                        pst.setInt(4, Integer.parseInt((String) jComboBox_AñoModificar.getSelectedItem()));
+                        pst.setInt(5, Integer.parseInt((String) jTextField_CodigoModificar.getText()));
+                        pst.executeUpdate();
+                        cn.close();
+                        JOptionPane.showMessageDialog(null, "Registro MODIFICADO satisfactoriamente.");
+                    } catch (HeadlessException | NumberFormatException | SQLException e) {
+                        System.err.println(e.getCause());
+                        System.err.println(e);
+                    }
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Campos vacios o incompletos.");
+                }
+            case JOptionPane.CLOSED_OPTION:
+                JOptionPane.showMessageDialog(null, "No se hicieron cambios.");
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_jButton_ModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,28 +541,60 @@ public class Administrador extends javax.swing.JFrame {
         });
     }
 
+    public final void tableModelDef() {
+        modelo = new DefaultTableModel();
+        jTable1.setModel(modelo);
+        modelo.addColumn("CODIGO");
+        modelo.addColumn("TITULO");
+        modelo.addColumn("AUTOR");
+        modelo.addColumn("EDITORIAL");
+        modelo.addColumn("AÑO");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_AgregarLibro;
-    private javax.swing.JButton jButton_EliminarLibro;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel_AutorLibro;
-    private javax.swing.JLabel jLabel_AñoLibro;
-    private javax.swing.JLabel jLabel_EditorialLibro;
-    private javax.swing.JLabel jLabel_NombreLibro;
+    private javax.swing.JButton jButton_Agregar;
+    private javax.swing.JButton jButton_BuscarBusqueda;
+    private javax.swing.JButton jButton_Eliminar;
+    private javax.swing.JButton jButton_Modificar;
+    private javax.swing.JButton jButton_TodoBusqueda;
+    private javax.swing.JComboBox<String> jComboBox_AñoAgregar;
+    private javax.swing.JComboBox<String> jComboBox_AñoModificar;
+    private javax.swing.JLabel jLabel_AgregarBox;
+    private javax.swing.JLabel jLabel_AutorAgregar;
+    private javax.swing.JLabel jLabel_AutorBusqueda;
+    private javax.swing.JLabel jLabel_AutorModificar;
+    private javax.swing.JLabel jLabel_AñoAgregar;
+    private javax.swing.JLabel jLabel_AñoModificar;
+    private javax.swing.JLabel jLabel_BusquedaBox;
+    private javax.swing.JLabel jLabel_CodigoAgregar;
+    private javax.swing.JLabel jLabel_CodigoModificar;
+    private javax.swing.JLabel jLabel_EditorialAgregar;
+    private javax.swing.JLabel jLabel_EditorialModificar;
+    private javax.swing.JLabel jLabel_ModificarBox;
+    private javax.swing.JLabel jLabel_TituloAgregar;
+    private javax.swing.JLabel jLabel_TituloBusqueda;
+    private javax.swing.JLabel jLabel_TituloModificar;
     private javax.swing.JLabel jLabel_wallpaper;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JMenu jMenu_Espaciador;
+    private javax.swing.JMenu jMenu_Nombre;
+    private javax.swing.JPanel jPanel_Biblioteca;
     private javax.swing.JPanel jPanel_Libros;
     private javax.swing.JPanel jPanel_Usuarios;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField_AutorAgregar;
+    private javax.swing.JTextField jTextField_AutorBusqueda;
+    private javax.swing.JTextField jTextField_AutorModificar;
+    private javax.swing.JTextField jTextField_CodigoAgregar;
+    private javax.swing.JTextField jTextField_CodigoModificar;
+    private javax.swing.JTextField jTextField_EditorialAgregar;
+    private javax.swing.JTextField jTextField_EditorialModificar;
+    private javax.swing.JTextField jTextField_TituloAgregar;
+    private javax.swing.JTextField jTextField_TituloBusqueda;
+    private javax.swing.JTextField jTextField_TituloModificar;
     // End of variables declaration//GEN-END:variables
 }

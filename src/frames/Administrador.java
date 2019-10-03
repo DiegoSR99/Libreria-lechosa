@@ -6,12 +6,9 @@
 package frames;
 
 import clases.Conexion;
-import java.awt.Color;
-import java.awt.Image;
+import java.awt.*;
 import java.sql.*;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
+import javax.swing.*;
 /**
  *
  * @author EDUARDO
@@ -166,7 +163,7 @@ public class Administrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Libros", jPanel_Libros);
         jTabbedPane1.addTab("Usuarios", jPanel_Usuarios);
-        jTabbedPane1.addTab("Biblioteca", jPanel3);
+        jTabbedPane1.addTab("penes", jPanel3);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 1280, 630));
 

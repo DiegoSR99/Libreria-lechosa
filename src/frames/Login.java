@@ -153,8 +153,6 @@ public class Login extends javax.swing.JFrame {
                     if (estatus && permiso == 3) {
                         dispose();
                         new Administrador().setVisible(true);
-                        new Bibliotecario().setVisible(true);
-                        new Usuario().setVisible(true); 
                     } else if (estatus && permiso == 2) {
                         dispose();
                         new Bibliotecario().setVisible(true); 

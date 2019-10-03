@@ -64,18 +64,22 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel_loading = new javax.swing.JLabel();
+        jLabel_TextoLibreria_lechosa = new javax.swing.JLabel();
         jLabel_verPass = new javax.swing.JLabel();
         tf_usuario = new javax.swing.JTextField();
         tf_contrasena = new javax.swing.JPasswordField();
         jButton_Acceder = new javax.swing.JButton();
         jLabel_logo = new javax.swing.JLabel();
+        jLabel_bievenida = new javax.swing.JLabel();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jLabel_loading, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 420, 85, 85));
+
+        jLabel_TextoLibreria_lechosa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_TextoLibreria_lechosa.setText("Libreria Lechosa S.A de C.V ©.®.");
+        getContentPane().add(jLabel_TextoLibreria_lechosa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 400, -1));
 
         jLabel_verPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_verPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -131,6 +135,11 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton_Acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 180, 30));
         getContentPane().add(jLabel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 200, 200));
+
+        jLabel_bievenida.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel_bievenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_bievenida.setText("BIENVENID@");
+        getContentPane().add(jLabel_bievenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 220, -1));
         getContentPane().add(jLabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
@@ -251,7 +260,8 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Acceder;
-    private javax.swing.JLabel jLabel_loading;
+    private javax.swing.JLabel jLabel_TextoLibreria_lechosa;
+    private javax.swing.JLabel jLabel_bievenida;
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_verPass;
     private javax.swing.JLabel jLabel_wallpaper;

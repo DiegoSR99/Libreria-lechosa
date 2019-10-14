@@ -171,7 +171,6 @@ public class Administrador extends javax.swing.JFrame {
         jTextField_EditorialAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel_Libros.add(jTextField_EditorialAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 510, -1));
 
-        jComboBox_AñoAgregar.setSelectedIndex(-1);
         jComboBox_AñoAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel_Libros.add(jComboBox_AñoAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 510, -1));
 
@@ -250,7 +249,7 @@ public class Administrador extends javax.swing.JFrame {
                 jButton_ModificarActionPerformed(evt);
             }
         });
-        jPanel_Libros.add(jButton_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, -1, -1));
+        jPanel_Libros.add(jButton_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 240, -1, -1));
 
         jLabel_ModificarBox.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel_ModificarBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -266,7 +265,11 @@ public class Administrador extends javax.swing.JFrame {
         jLabel_AutorBusqueda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel_AutorBusqueda.setText("Autor:");
         jPanel_Libros.add(jLabel_AutorBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 70, -1));
+
+        jTextField_TituloBusqueda.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel_Libros.add(jTextField_TituloBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 400, -1));
+
+        jTextField_AutorBusqueda.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel_Libros.add(jTextField_AutorBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 400, -1));
 
         jButton_BuscarBusqueda.setText("Buscar");
